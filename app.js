@@ -15,33 +15,10 @@ const alexis = {
 // console.log(Object.getOwnPropertyNames(alexis))
 // console.log(Object.entries(alexis))
 
+// Nos ayuda a que nuestras propiedades sean configurable: false
+// Object.seal(alexis)
 
-Object.defineProperty(alexis, "editor", {
-    value: "VSCode",
-    writable: false,
-    enumerable: true,
-    configurable: true,
-})
-
-Object.defineProperty(alexis, "navigator", {
-    value: "Chrome",
-    writable: true,
-    enumerable: false,
-    configurable: true,
-})
-
-Object.defineProperty(alexis, "terminal", {
-    value: "Linux",
-    writable: true,
-    enumerable: true,
-    configurable: false,
-})
-
-Object.defineProperty(alexis, "pruebaNasa", {
-    value: "extraterrestes",
-    writable: false,
-    enumerable: false,
-    configurable: false,
-})
+// Freeze no permite eliminar ni editar, configurable y writable: false
+Object.freeze(alexis)
 
 console.log(Object.getOwnPropertyDescriptors(alexis))
