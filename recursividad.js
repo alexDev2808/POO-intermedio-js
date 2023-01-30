@@ -4,17 +4,47 @@ const obj1 = {
     c: {
         d: "d",
         e: 'e'
+    },
+    editA(){
+        this.a = "AAAAAAAA"
     }
 }
 
+function isObject(subject){
+    return typeof subject === 'object'
+}
 
-const numeros = [3,4,2,5,3,6,8,5,12,35,6,8,53,63]
+function isArray(subject){
+    return Array.isArray(subject)
+}
 
-function recursiva([...arrNum]){
-    if(arrNum.length > 0){
-        const firstNum = arrNum[0];
-        console.log(firstNum)
-        arrNum.shift()
-        recursiva(arrNum)
+function deepCopy(subject){
+    let copySubject;
+
+    const subjectIsArray = isArray(subject);
+    const subjectIsObject = isObject(subject);
+
+    if(subjectIsArray){
+        copySubject = [];
+    }else if(subjectIsObject){
+        copySubject = {}
+    }else{
+        return subject;
     }
+
+    for(key in subject){
+        const keyIsObject = isObject(subject[key]);
+
+        if(keyIsObject){
+            copySubject[key] = deepCopy(subject[key])
+        }else{
+            if(subjectIsArray){
+                copySubject.push(subject[key]);
+            }else{
+                copySubject[key] = subject[key]
+            }
+        }
+    }
+
+    return copySubject;
 }
