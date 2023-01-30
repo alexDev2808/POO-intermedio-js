@@ -1,14 +1,4 @@
-const obj1 = {
-    a: "a",
-    b: "b",
-    c: {
-        d: "d",
-        e: 'e'
-    },
-    editA(){
-        this.a = "AAAAAAAA"
-    }
-}
+
 
 function isObject(subject){
     return typeof subject === 'object'
@@ -48,3 +38,24 @@ function deepCopy(subject){
 
     return copySubject;
 }
+
+
+const studentBase = {
+    name: undefined,
+    email: undefined,
+    age: undefined,
+    approvedCourses: undefined,
+    learningPaths: undefined,
+    socialMedia: {
+        twitter: undefined,
+        instagram: undefined,
+        facebook: undefined,
+    }
+};
+
+const alexis = deepCopy(studentBase)
+
+Object.seal(alexis)
+
+// Preguntar si todas las propiedades de configurable es false
+Object.isSealed(alexis)
