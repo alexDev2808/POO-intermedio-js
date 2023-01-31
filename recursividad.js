@@ -73,8 +73,15 @@ function createStudent({
     learningPaths = [],
     // = {} indica que por defecto sea un objeto
 } = {}){
-    return {
-        name,
+
+    // Utilizar el scope de JS para de alguna forma proteger las variables privadas o que nos importan
+    // La variable private se crea como un objeto para que se puedan acceder facilmente a sus propiedades
+    const private = {
+        "_name": name,
+
+    };
+
+    const public = {
         age,
         email,
         approvedCourses,
@@ -84,7 +91,26 @@ function createStudent({
             instagram,
             facebook
         },
-    }
+        readName(){
+            return private._name;
+        },
+        changeName(newName){
+            private._name = newName;
+        },
+    };
+
+    // Object.defineProperty para proteger los metodos de la sobreescritura o la eliminacion
+    Object.defineProperty(public, "readName", {
+        configurable: false,
+        writable: false
+    });
+
+    Object.defineProperty(public, "changeName", {
+        configurable: false,
+        writable: false
+    });
+
+    return public;
 }
 
 const alexis = createStudent({
