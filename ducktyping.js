@@ -49,31 +49,6 @@ function LearningPath({
     this.name = name;
     this.courses = courses;
 
-    // const private = {
-    //     "_name": name,
-    //     "_courses": courses,
-    // }
-
-    // const public = {
-
-    //     get name(){
-    //         return private._name;
-    //     },
-    //     set name(newName){
-    //         if(newName.length > 0){
-    //             private._name = newName;
-    //         }else{
-    //             console.warn("Tu nombre debe tener 1 caracter")
-    //         }
-    //     },
-
-    //     get courses(){
-    //         return private._courses;
-    //     },
-        
-    // }
-
-    // return public;
 }
 
 function Student({
@@ -100,60 +75,31 @@ function Student({
         facebook
     }
 
-    if(isArray(learningPaths)){
-
-        this.learningPaths = []
-
-        for(let learningPathIndex in learningPaths){
-            if(learningPaths[learningPathIndex] instanceof LearningPath){
-                this.learningPaths.push(learningPaths[learningPathIndex])
-            }
-        }
+    const private = {
+        "_learningPaths": [],
     }
 
-    
-    // const private = {
-    //     "_name": name,
-    //     "_learningPaths": learningPaths,
+    Object.defineProperty(this, "learningPaths", {
+        get(){
+            return private._learningPaths;
+        },
+        set(newLP){
+                if(newLP instanceof LearningPath){
+                    private._learningPaths.push(newLP)
+                }else{
+                    console.warn("Alguno de los LPs no es una instancia del prototipo LearningPath")
+                }
+            }
+        }
+    )
 
-    // };
+    for(let learningPathIndex in learningPaths){
+        this.learningPaths = learningPaths[learningPathIndex]
+    }        
 
-    // const public = {
-    //     age,
-    //     email,
-    //     approvedCourses,
-    //     socialMedia: {
-    //         twitter,
-    //         instagram,
-    //         facebook
-    //     },
-    //     get learningPaths(){
-    //         return private._learningPaths;
-    //     },
-    //     set learningPaths(newLP){
-    //         if(!newLP.name){
-    //             console.warn("Tu LP no tiene la propiedad name")
-    //             return;
-    //         }
-
-    //         if(!newLP.courses){
-    //             console.warn("Tu LP no tiene courses");
-    //             return;
-    //         }
-
-    //         if(!isArray(newLP.courses)){
-    //             console.warn("Tu LP no es una lista (*de cursos")
-    //             return;
-    //         }
-
-    //         private._learningPaths.push(newLP);
-    //     }
-
-    // };
-
-  
-    // return public;
 }
+
+
 
 const escuelaWeb = new LearningPath({name: "Escuela |Web"})
 const escuelaData = new LearningPath({name: "Escuela de DataScience"})
